@@ -86,7 +86,8 @@ public class ItemController {
     @PostMapping("/add")
     public String saveItem(Item item) {
         itemRepository.save(item);
-        return "shop/item";
+//        return "shop/item";
+        return "redirect:/shop/items/" + item.getId();
     }
 
     @GetMapping("/{itemId}/edit")
@@ -96,7 +97,11 @@ public class ItemController {
         return "shop/editForm";
     }
 
-
+    @PostMapping("/{itemId}/edit")
+    public String editItem(@PathVariable Long itemId ,@ModelAttribute("item") ItemDTO item) {
+        itemRepository.update(itemId, item);
+        return "redirect:/shop/items/{itemId}";
+    }
 
     /**
      * Test Data
